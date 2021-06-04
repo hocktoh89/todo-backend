@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const envConfig = require('../env.config');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-const uri = process.env.DB_URL;
+const uri = envConfig.getDBurl(process.env.ENV);
 
 /**
  * Mongodb database connection.
