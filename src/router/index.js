@@ -1,5 +1,6 @@
-const express = require('express');
-const createToDoRouter = require('./todo');
+import express from 'express';
+import { createToDoRouter} from './todo';
+
 const router = express.Router();
 
 router.post('/', createToDoRouter);

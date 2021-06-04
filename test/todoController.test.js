@@ -1,4 +1,4 @@
-const createToDoController = require('../src/controller/todo');
+const ToDoController = require('../src/controller/todo');
 
 const db = require('../src/db');
 
@@ -12,7 +12,7 @@ describe('Test ToDo Controller', () => {
         afterAll(async () => await db.clearDatabase());
 
         test('Insert ToDo to DB', async () => {
-            const { toDoId, text } = await createToDoController.createToDo('See Doctor');
+            const { toDoId, text } = await ToDoController.createToDo('See Doctor');
 
             expect(toDoId).toBeTruthy();
             expect(text).toBe('See Doctor');
@@ -20,7 +20,7 @@ describe('Test ToDo Controller', () => {
 
         test('Throw Exception on Add Same Record Found', async () => {
             try {
-                await createToDoController.createToDo('See Doctor')
+                await ToDoController.createToDo('See Doctor')
             } catch (err) {
                 expect(err.message).toBe('To do - See Doctor - exist');
             }
@@ -34,11 +34,11 @@ describe('Test ToDo Controller', () => {
 
         test('Get all ToDos', async () => {
 
-            await createToDoController.createToDo('See Doctor 1');
-            await createToDoController.createToDo('See Doctor 2');
-            await createToDoController.createToDo('See Doctor 3');
+            await ToDoController.createToDo('See Doctor 1');
+            await ToDoController.createToDo('See Doctor 2');
+            await ToDoController.createToDo('See Doctor 3');
 
-            const toDos = await createToDoController.getToDos();
+            const toDos = await ToDoController.getToDos();
 
             expect(toDos[0].text).toBe('See Doctor 1');
             expect(toDos[1].text).toBe('See Doctor 2');
@@ -46,21 +46,21 @@ describe('Test ToDo Controller', () => {
         })
 
         test('Get empty array when no records', async () => {
-            const toDos = await createToDoController.getToDos();
+            const toDos = await ToDoController.getToDos();
             expect(toDos).toEqual([]);
         })
 
         test('Throw exception on error found', async () => {
 
-            createToDoController.getToDos = jest.fn().mockImplementation(() => {
+            ToDoController.getToDos = jest.fn().mockImplementation(() => {
                 throw new Error("UNKNOWN ERROR");
               });
 
             try {
-                await createToDoController.getToDos();
+                await ToDoController.getToDos();
             } catch (err) {
-                expect(createToDoController.getToDos).toThrow(Error);
-                expect(createToDoController.getToDos).toThrow("UNKNOWN ERROR");
+                expect(ToDoController.getToDos).toThrow(Error);
+                expect(ToDoController.getToDos).toThrow("UNKNOWN ERROR");
             }
 
         })

@@ -1,10 +1,10 @@
 
-import createToDoRouter from '../src/router/todo';
-import * as createToDoController from '../src/controller/todo';
+import * as ToDoRouter from '../src/router/todo';
+import * as ToDoController from '../src/controller/todo';
 
 describe("Test ToDo Router", () => {
 
-  describe("Post ToDo", () => {
+  describe("POST ToDo", () => {
 
       test("test succesful response with 200", async () => {
 
@@ -19,13 +19,42 @@ describe("Test ToDo Router", () => {
             status: jest.fn(() => res)
         }
 
-        createToDoController.createToDo = jest.fn().mockReturnValue(expectedResult);
+        ToDoController.createToDo = jest.fn().mockReturnValue(expectedResult);
 
-        await createToDoRouter(req, res);
+        await ToDoRouter.createToDoRouter(req, res);
         
         expect(res.status).toBeCalledWith(200);
-        expect(res.json).toHaveReturnedWith(expectedResult);
+        expect(res.json).toHaveReturnedWith({data: expectedResult});
       });     
 
   });
+
+  describe("GET ToDos", () => {
+    test("test succesful response with 200", async () => {
+
+        const expectedResult = [{
+            toDoId: "cd90",
+            text: "Eat Lunch"
+        },
+        {
+            toDoId: "ab12",
+            text: "Go Facial"
+        }];
+
+        const req = {}
+        const res = {
+            json: jest.fn().mockImplementation((result) => result),
+            status: jest.fn(() => res)
+        }
+
+        ToDoController.getToDos = jest.fn().mockReturnValue(expectedResult);
+
+        await ToDoRouter.getToDosRouter(req, res);
+        
+        expect(res.status).toBeCalledWith(200);
+        expect(res.json).toHaveReturnedWith({data: expectedResult});
+        });     
+
+    });
+
 });
