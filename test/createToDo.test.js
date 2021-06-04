@@ -1,4 +1,4 @@
-const createToDo = require('../src/controller/ToDo/create');
+const createToDo = require('../src/controller/todo');
 
 const db = require('../src/db');
 
