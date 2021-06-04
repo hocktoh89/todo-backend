@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use('/todo', toDoRouter);
+app.use('/todos', toDoRouter);
 
 const port = 3000 || process.env.port
 

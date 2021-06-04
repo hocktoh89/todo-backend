@@ -29,3 +29,11 @@ export async function getToDos () {
         throw err;
     }
 }
+
+export async function updateToDos (id, text) {
+    try {
+        return await ToDo.find({});
+    } catch (err) {
+        throw err;
+    }
+}

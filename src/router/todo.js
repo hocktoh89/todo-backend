@@ -5,7 +5,7 @@ export const createToDoRouter = async (req, res) => {
         const { text: inputText} = req.body || {};
         const { toDoId, text } = await createToDo(inputText);
 
-        res.status(200).json({
+        res.status(201).json({
             data: {
                 toDoId, 
                 text

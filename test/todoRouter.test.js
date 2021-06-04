@@ -6,7 +6,7 @@ describe("Test ToDo Router", () => {
 
   describe("POST ToDo", () => {
 
-      test("test succesful response with 200", async () => {
+      test("test succesful response with 201", async () => {
 
         const expectedResult = {
             toDoId: "123",
@@ -23,7 +23,7 @@ describe("Test ToDo Router", () => {
 
         await ToDoRouter.createToDoRouter(req, res);
         
-        expect(res.status).toBeCalledWith(200);
+        expect(res.status).toBeCalledWith(201);
         expect(res.json).toHaveReturnedWith({data: expectedResult});
       });     
 
