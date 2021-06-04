@@ -17,3 +17,11 @@ const uri = process.env.DB_URL;
 
     await mongoose.connect(uri, mongooseOpts);
 }
+
+/**
+ * Drop database and close the connection.
+ */
+ module.exports.closeDatabase = async () => {
+    await mongoose.connection.dropDatabase();
+    await mongoose.connection.close();
+}
