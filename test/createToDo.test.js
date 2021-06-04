@@ -5,12 +5,21 @@ beforeAll(async () => await db.connect());
 
 afterAll(async () => await db.closeDatabase());
 
-describe('Test ToDo', () => {
+describe('Test ToDo Controller', () => {
 
-    it('Add New ToDo record to the DB', async () => {
+    test('Insert ToDo to DB', async () => {
         const { toDoId, text } = await createToDo('See Doctor');
 
         expect(toDoId).toBeTruthy();
         expect(text).toBe('See Doctor');
+    })
+
+    test('Throw Exception on Add Same Record Found', async () => {
+        try {
+            await createToDo('See Doctor')
+        } catch (err) {
+            expect(err.message).toBe('To do - See Doctor - exist');
+        }
+
     })
 })
