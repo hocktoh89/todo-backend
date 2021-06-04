@@ -1,4 +1,4 @@
-const ToDo = require("../model/ToDo")
+const ToDo = require("../../model/ToDo")
 
 async function createToDo (text) {
     try {
