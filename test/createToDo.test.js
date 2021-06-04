@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config({path: '../env.test'});
-
 const createToDo = require('../src/controller/ToDo/create');
 
 const db = require('../src/db');
