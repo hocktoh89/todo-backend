@@ -1,4 +1,4 @@
-const createToDo = require('../src/controller/todo');
+const createToDoController = require('../src/controller/todo');
 
 const db = require('../src/db');
 
@@ -10,7 +10,7 @@ describe('Test ToDo Controller', () => {
 
     describe('Test Creation', () => {
         test('Insert ToDo to DB', async () => {
-            const { toDoId, text } = await createToDo('See Doctor');
+            const { toDoId, text } = await createToDoController.createToDo('See Doctor');
 
             expect(toDoId).toBeTruthy();
             expect(text).toBe('See Doctor');
@@ -18,11 +18,13 @@ describe('Test ToDo Controller', () => {
 
         test('Throw Exception on Add Same Record Found', async () => {
             try {
-                await createToDo('See Doctor')
+                await createToDoController.createToDo('See Doctor')
             } catch (err) {
                 expect(err.message).toBe('To do - See Doctor - exist');
             }
 
         })
     });
+
+
 })

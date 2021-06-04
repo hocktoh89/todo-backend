@@ -1,4 +1,4 @@
-const createToDo = require('../controller/todo');
+import { createToDo } from '../controller/todo';
 
 const createToDoRouter = async (req, res) => {
     try {

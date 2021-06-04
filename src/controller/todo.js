@@ -1,8 +1,7 @@
 const ToDo = require("../model/ToDo")
 
-async function createToDo (text) {
+export async function createToDo (text) {
     try {
-
         const foundToDo = await ToDo.findOne({text:text});
 
         if (foundToDo) {
@@ -23,4 +22,10 @@ async function createToDo (text) {
     }
 }
 
-module.exports = createToDo;
+export async function getToDos () {
+    try {
+        return await ToDo.find({});
+    } catch (err) {
+        throw err;
+    }
+}

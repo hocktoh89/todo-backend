@@ -1,7 +1,6 @@
-jest.mock('../src/controller/todo');
 
 import createToDoRouter from '../src/router/todo';
-import createToDoController from '../src/controller/todo';
+import * as createToDoController from '../src/controller/todo';
 
 describe("Test ToDo Router", () => {
 
@@ -20,7 +19,7 @@ describe("Test ToDo Router", () => {
             status: jest.fn(() => res)
         }
 
-        createToDoController.mockReturnValue(expectedResult);
+        createToDoController.createToDo = jest.fn().mockReturnValue(expectedResult);
 
         await createToDoRouter(req, res);
         
