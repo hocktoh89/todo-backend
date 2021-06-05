@@ -85,26 +85,44 @@ describe('Test ToDo Controller', () => {
 
         })
     });
+
+    describe('Test Delete By ID', () => {
+
+        afterEach(async () => await db.clearDatabase())
+    
+        beforeEach(async () => {
+            await ToDoController.createToDo('See Doctor 1');
+            await ToDoController.createToDo('See Doctor 2');
+            await ToDoController.createToDo('See Doctor 3');
+        })
+    
+        test('ToDo items reduced from 3 to 2', async () => {
+            const initialToDos = await ToDoController.getToDos();
+    
+            const { _id } = initialToDos[0];
+    
+            await ToDoController.deleteToDo(_id);
+    
+            const newToDos = await ToDoController.getToDos();
+            expect(newToDos).toHaveLength(2);
+        })
+    });
+
+    describe('Test Delete All', () => {
+
+        afterEach(async () => await db.clearDatabase())
+    
+        beforeEach(async () => {
+            await ToDoController.createToDo('See Doctor 1');
+            await ToDoController.createToDo('See Doctor 2');
+            await ToDoController.createToDo('See Doctor 3');
+        })
+        
+        test('ToDo items count return 0', async () => {
+            await ToDoController.deleteAllToDo();
+    
+            const newToDos = await ToDoController.getToDos();
+            expect(newToDos).toHaveLength(0);
+        })
+    });
 })
-
-describe('Test Delete By ID', () => {
-
-    afterEach(async () => await db.clearDatabase())
-
-    beforeEach(async () => {
-        await ToDoController.createToDo('See Doctor 1');
-        await ToDoController.createToDo('See Doctor 2');
-        await ToDoController.createToDo('See Doctor 3');
-    })
-
-    test('ToDo items reduced from 3 to 2', async () => {
-        const initialToDos = await ToDoController.getToDos();
-
-        const { _id } = initialToDos[0];
-
-        await ToDoController.deleteToDo(_id);
-
-        const newToDos = await ToDoController.getToDos();
-        expect(newToDos).toHaveLength(2);
-    })
-});

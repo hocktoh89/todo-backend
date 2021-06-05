@@ -52,3 +52,11 @@ export async function deleteToDo (id) {
         throw err;
     }
 }
+
+export async function deleteAllToDo () {
+    try {
+        return await ToDo.deleteMany();
+    } catch (err) {
+        throw err;
+    }
+}
