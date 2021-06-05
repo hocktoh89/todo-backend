@@ -30,9 +30,16 @@ export async function getToDos () {
     }
 }
 
-export async function updateToDos (id, text) {
+export async function updateToDo (id, data) {
     try {
-        return await ToDo.find({});
+        const result = await ToDo.findByIdAndUpdate(id, data, {new: true});
+
+        if (!result) {
+            throw new Error(`No data updated, id doesn't exist`);
+        }
+
+        return result;
+
     } catch (err) {
         throw err;
     }

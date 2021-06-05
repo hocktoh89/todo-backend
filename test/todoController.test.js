@@ -66,4 +66,35 @@ describe('Test ToDo Controller', () => {
         })
     });
 
+    describe('Test Update', () => {
+
+        afterEach(async () => await db.clearDatabase())
+
+        test('Update ToDo by id', async () => {
+            const updateData = {
+                text: 'Learn guitar'
+            };
+
+            const result = await ToDoController.createToDo('See Doctor 1');
+            const { toDoId } = result;
+
+            const updatedToDo = await ToDoController.updateToDo(toDoId, updateData);
+
+            expect(updatedToDo.text).toBe('Learn guitar');
+        })
+
+        test('Throw exception on update unknown id', async () => {
+
+            const updateData = {
+                text: 'Learn piano'
+            };
+
+            try {
+                const updatedToDo = await ToDoController.updateToDo('ed156cf1f46b6fc0402c082c', updateData);
+            } catch (err) {
+                expect(err.message).toBe(`No data updated, id doesn't exist`);
+            }
+
+        })
+    });
 })
