@@ -1,8 +1,9 @@
-const ToDoController = require('../src/controller/todo');
+import * as ToDoController from '../src/controller/todo';
+import db from '../src/db';
 
-const db = require('../src/db');
-
-beforeAll(async () => await db.connect());
+beforeAll(async () => {
+    await db.connect();
+});
 
 afterAll(async () => await db.closeDatabase());
 
@@ -30,7 +31,9 @@ describe('Test ToDo Controller', () => {
 
     describe('Test Get All', () => {
 
-        afterEach(async () => await db.clearDatabase())
+        afterEach(async () => { 
+            await db.clearDatabase();
+         })
 
         test('Get all ToDos', async () => {
 
@@ -48,21 +51,6 @@ describe('Test ToDo Controller', () => {
         test('Get empty array when no records', async () => {
             const toDos = await ToDoController.getToDos();
             expect(toDos).toEqual([]);
-        })
-
-        test('Throw exception on error found', async () => {
-
-            ToDoController.getToDos = jest.fn().mockImplementation(() => {
-                throw new Error("UNKNOWN ERROR");
-              });
-
-            try {
-                await ToDoController.getToDos();
-            } catch (err) {
-                expect(ToDoController.getToDos).toThrow(Error);
-                expect(ToDoController.getToDos).toThrow("UNKNOWN ERROR");
-            }
-
         })
     });
 
@@ -98,3 +86,25 @@ describe('Test ToDo Controller', () => {
         })
     });
 })
+
+describe('Test Delete By ID', () => {
+
+    afterEach(async () => await db.clearDatabase())
+
+    beforeEach(async () => {
+        await ToDoController.createToDo('See Doctor 1');
+        await ToDoController.createToDo('See Doctor 2');
+        await ToDoController.createToDo('See Doctor 3');
+    })
+
+    test('ToDo items reduced from 3 to 2', async () => {
+        const initialToDos = await ToDoController.getToDos();
+
+        const { _id } = initialToDos[0];
+
+        await ToDoController.deleteToDo(_id);
+
+        const newToDos = await ToDoController.getToDos();
+        expect(newToDos).toHaveLength(2);
+    })
+});

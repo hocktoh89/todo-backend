@@ -44,3 +44,11 @@ export async function updateToDo (id, data) {
         throw err;
     }
 }
+
+export async function deleteToDo (id) {
+    try {
+        await ToDo.findByIdAndDelete(id);
+    } catch (err) {
+        throw err;
+    }
+}
