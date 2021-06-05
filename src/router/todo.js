@@ -1,4 +1,4 @@
-import { createToDo, getToDos, updateToDo } from '../controller/todo';
+import { createToDo, getToDos, updateToDo, deleteToDo } from '../controller/todo';
 
 export const createToDoRouter = async (req, res) => {
     try {
@@ -43,6 +43,22 @@ export const putToDosRouter = async (req, res) => {
         res.status(200).json({
             data: updatedToDo
         });
+
+    } catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+export const deleteToDoRouter = async (req, res) => {
+    try {
+        const { params } = req || {};
+        const { id } = params || {};
+        
+        await deleteToDo(id);
+
+        res.status(204).json({});
 
     } catch (err) {
         res.status(400).json({

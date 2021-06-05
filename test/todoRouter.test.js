@@ -56,7 +56,7 @@ describe("Test ToDo Router", () => {
         });
     });
 
-    describe("PUT ToDos", () => {
+    describe("PUT ToDo", () => {
         test("test succesful response with 200", async () => {
 
             const expectedResult = [{
@@ -76,6 +76,23 @@ describe("Test ToDo Router", () => {
             
             expect(res.status).toBeCalledWith(200);
             expect(res.json).toHaveReturnedWith({data: expectedResult});
+        });
+    });
+
+    describe("DELETE ToDo", () => {
+        test("test succesful response with 200", async () => {
+
+            const req = {}
+            const res = {
+                json: jest.fn().mockImplementation((result) => result),
+                status: jest.fn(() => res)
+            }
+
+            ToDoController.deleteToDo = jest.fn().mockReturnValue({});
+
+            await ToDoRouter.deleteToDoRouter(req, res);
+            
+            expect(res.status).toBeCalledWith(204);
         });
     });
 });

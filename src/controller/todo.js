@@ -47,7 +47,7 @@ export async function updateToDo (id, data) {
 
 export async function deleteToDo (id) {
     try {
-        await ToDo.findByIdAndDelete(id);
+        return await ToDo.findByIdAndDelete(id);
     } catch (err) {
         throw err;
     }
